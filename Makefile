@@ -6,9 +6,19 @@ profile := sms-dev
 region := us-west-2
 stage := v1
 allow_cidr := x.x.x.x
+vpc_env := dev
 
 AWS_PARAMS=AWS_PROFILE=$(profile) AWS_DEFAULT_REGION=${region}
-LAMBDA_PARAMS=FAILURE_ENDPOINT="${failure_endpoint}" ALLOW_CIDR="$(allow_cidr)" ENV=${env}
+
+vpc_id := $(shell ${AWS_PARAMS} aws ec2 describe-vpcs --filters "Name=tag:Environment,Values=${vpc_env}" --query Vpcs[0].VpcId --output text)
+subnet_ids := $(shell ${AWS_PARAMS} aws ec2 describe-subnets --filters "Name=vpc-id,Values=${vpc_id}" --query Subnets[*].SubnetId --output text)
+
+LAMBDA_PARAMS=ALLOW_CIDR="$(allow_cidr)" ENV=${env} JLR_ENDPOINT=${jlr_endpoint} VPC_ID=${vpc_id} VPC_SUBNETS="${subnet_ids}"
+
+vpc:
+	@echo ${vpc_id}
+subnets:
+	@echo ${subnet_ids}
 
 local-invoke:
 	${AWS_PARAMS} ${LAMBDA_PARAMS} ./node_modules/.bin/lambda-local -t 20 -f $(function_file) -e $(event_file)
