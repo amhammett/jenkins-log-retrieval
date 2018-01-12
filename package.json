@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "jenkins-api": "^0.3.1",
+    "serverless": "^1.25.0"
+  },
+  "devDependencies": {
+    "aws-lambda-local": "^1.0.15"
+  }
+}
