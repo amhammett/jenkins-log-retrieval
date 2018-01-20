@@ -1,12 +1,13 @@
 service: "jlr-${env:ENV}"
 
 provider:
-  name:       aws
-  runtime:    nodejs6.10
-  region:     ${env:AWS_DEFAULT_REGION, 'us-west-2'}
-  stage:      ${opt:stage}
-  memorySize: 512
-  timeout:    2
+  name:               aws
+  runtime:            nodejs6.10
+  stage:              ${opt:stage}
+  region:             ${env:AWS_DEFAULT_REGION, 'us-west-2'}
+  logRetentionInDays: 7
+  memorySize:         128
+  timeout:            10
 
   environment:
     ALLOW_CIDR:   "${env:ALLOW_CIDR, 'x.x.x.x'}"
@@ -27,7 +28,7 @@ package:
     - venv
 
 functions:
-  send:
+  console:
     handler: src/console.console
     events:
       - http:
