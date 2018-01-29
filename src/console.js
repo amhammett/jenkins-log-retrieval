@@ -1,6 +1,6 @@
 'use strict';
 
-const JENKINS_HOST  = process.env.JLR_ENDPOINT  || 'http://jenkins.url'
+const JENKINS_HOST  = process.env.JENKINS_HOST  || 'http://jenkins.url'
 const ALLOW_CIDR    = process.env.ALLOW_CIDR    || 'x.x.x.x'
 const MAX_LOG_LINES = process.env.MAX_LOG_LINES || '200'
 

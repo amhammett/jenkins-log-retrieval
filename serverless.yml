@@ -12,7 +12,7 @@ provider:
   environment:
     ALLOW_CIDR:   "${env:ALLOW_CIDR, 'x.x.x.x'}"
     ENV_NAME:     "${env:ENV}"
-    JLR_ENDPOINT: "${env:JLR_ENDPOINT}"
+    JENKINS_HOST: "${env:JENKINS_HOST, 'http://jenkins.url/jenkins'}"
     JENKINS_PORT: "${env:JENKINS_PORT, '80'}"
 
   vpc:

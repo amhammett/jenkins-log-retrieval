@@ -13,7 +13,7 @@ AWS_PARAMS=AWS_PROFILE=$(profile) AWS_DEFAULT_REGION=${region}
 vpc_id := $(shell ${AWS_PARAMS} aws ec2 describe-vpcs --filters "Name=tag:Environment,Values=${vpc_env}" --query Vpcs[0].VpcId --output text)
 subnet_ids := $(shell ${AWS_PARAMS} aws ec2 describe-subnets --filters "Name=vpc-id,Values=${vpc_id}" --query Subnets[*].SubnetId --output text)
 
-LAMBDA_PARAMS=ALLOW_CIDR="$(allow_cidr)" ENV=${env} JLR_ENDPOINT=${jlr_endpoint} VPC_ID=${vpc_id} VPC_SUBNETS="${subnet_ids}"
+LAMBDA_PARAMS=ALLOW_CIDR="$(allow_cidr)" ENV=${env} JENKINS_HOST=${jenkins_host} VPC_ID=${vpc_id} VPC_SUBNETS="${subnet_ids}"
 
 vpc:
 	@echo ${vpc_id}
